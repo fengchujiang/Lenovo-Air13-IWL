@@ -14,10 +14,12 @@
 ##### 驱动 : `CPUFriend.kext` , `CPUFriendProvider.kext`
 ##### 补丁 : `SSDT-XCPM.aml`
 + 终端执行脚本`freqVectorsEdit.sh`输入密码,选`nano`继续,记下高亮绿色的机型`Mac-551B86E5744E2388.plist`(根据自己实际情况选择一个合适的记下),查看即可不要继续执行,关闭终端;
-+ `/System/Library/Extensions/IOPlatfromPluginFamily.kext/Contents/Pluglns/X86PlatformPlugin.kext/Contents/Resources`拷贝`Mac-551B86E5744E2388.plist`到桌面，修改最低频率为800Mhz ;
++ `/System/Library/Extensions/IOPlatfromPluginFamily.kext/Contents/Pluglns/X86PlatformPlugin.kext/Contents/Resources`拷贝`Mac-551B86E5744E2388.plist`出来，修改最低频率为800Mhz ;
 + 终端执行脚本`ResourceConverter.sh --kext Mac-551B86E5744E2388.plist `;
 + 得到`CPUFriendProvider.kext` (默认输出至用户名主目录下`~/`) ;
-+ 所需脚本在 `Tools/CPU/` ,变频正常, 双系统切换需要关机切换否则会有高频不降现象. 
++ 所需脚本在 `CPUFrequency/` ,变频正常, 双系统切换需要关机切换否则会有高频不降现象.
+  + 本段介绍为简单的基本用法,更高阶的调整请参考[stevezhengshiqi](https://github.com/daliansky/XiaoMi-Pro-Hackintosh/tree/master/one-key-cpufriend)
+
 ![CPU](Pictures/CPU.png)
 
 -----
@@ -39,7 +41,7 @@
 ##### 驱动 : `WhateverGreen.kext`
 ##### 补丁 : `SSDT-PNLF.aml`
 + 采用Properties方法注入ig-platform-id,默认使用`0x3e9b0000`,若出现睡眠唤醒花屏尝试更换`0x3EA50009` ;
-+ 终端使用 `Tools/HDIDPI/hidpi-zh.sh`(需要关闭SIP)一键开启HIDPI(注入EDID)可解决HDMI插拔黑屏的问题 ;
++ 终端使用 `HIDPI/hidpi-zh.sh`(需要关闭SIP)一键开启HIDPI(注入EDID)可解决HDMI插拔黑屏的问题 ;
 + 支持亮度调节,支持硬解H264,HEVC .
 ![UHD620](Pictures/UHD620.png)
 ![HDMI](Pictures/HDMI.png)
@@ -47,10 +49,18 @@
 -----
 
 ### 声卡 : Realtek ALC236  8086:9DC8
-##### 驱动 : `AppleALC.kext` , `FakePCIID.kext` , `FakePCIID_Intel_HDMI_Audio.kext` , `CodecCommander.kext`
-+ 采用Properties方法注入,注入ID为`99` ;
-+ 安装`Tools/ALCPlugFix`(需要关闭SIP)声卡守护进程(处理3.5mm接口切换);
-+ 内置音频输入输出正常,HDMI音频输出正常.
+##### 驱动 : `AppleALC.kext` , `CodecCommander.kext`
++ 采用Properties方法注入,注入ID为`99` (63000000);
+
++ 安装`ALCPlugFix`声卡守护进程(处理3.5mm接口切换);
+  
+  + 安装前需要确认SIP为关闭状态,使用本仓库的EFI,默认为关闭状态;
+  
+  + 开机或睡眠唤醒后出现声音异常,重新插拔即可;
+  
++ 内置音频输入输出正常,HDMI音频输出正常;
+
+
 ![ALC236](Pictures/ALC236.png)
 
 -----
@@ -125,7 +135,6 @@
 | VoodooPS2        | https://github.com/acidanthera/VoodooPS2/releases            |
 | VoodooI2C        | https://github.com/alexandred/VoodooI2C/releases             |
 | NoTouchID        | https://github.com/al3xtjames/NoTouchID/releases             |
-| FakePCIID        | https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads    |
 | CodecCommander   | https://bitbucket.org/RehabMan/os-x-eapd-codec-commander/downloads |
 | Hackintool       | http://headsoft.com.au/download/mac/Hackintool.zip           |
 | PlistEdit Pro    | https://www.fatcatsoftware.com/plisteditpro/PlistEditPro.zip |
