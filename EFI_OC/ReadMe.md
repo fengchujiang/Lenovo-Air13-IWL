@@ -1,3 +1,23 @@
+#### Air13IWL-OC-1.2.0
+
+- 移除补丁 `SSDT-AIR13IWL.aml`  , 重新整理 [HotPatch](https://github.com/daliansky/Lenovo-Air13-IWL-Hackintosh/blob/master/HotPatch/ReadMe.md) 添加下列部件补丁
+  - `SSDT-OSYS.aml` 、`SSDT-MCHC.aml` 、`SSDT-DMAC.aml` 、`SSDT-HPTE.aml` 、`SSDT-EC.aml` 、`SSDT-BKEY.aml` 、`SSDT-PMCR.aml` 、`SSDT-BUS0.aml` 、`SSDT-PR00.aml` 、`SSDT-PNLF.aml` 、`SSDT-GPRW.aml` 、`SSDT-RMCF.aml`
+  
+- 移除驱动 `SMCSuperIO.kext` 、`AIR13IWL.kext` , 添加下列驱动
+  - `XHCI-unsupported.kext` 、`USBPorts.kext` 、`CPUFriendDataProvider.kext`
+  
+- 重新使用 `SSDT-RMCF.aml` 定制PS2键盘按键映射 , 还原原版 `VoodooPS2Controller.kext` 驱动 
+  - 屏蔽错误的亮度调整快捷键 `Fn+K` 、`Fn+P`
+  - 添加 `PrtSc` = 系统电源键
+  - 添加 `Command` 、`Option` 交换位置
+    - `Command` = `Windows` 、`Option = Alt`
+  
+- `Config.plist`
+  - 移除 `AppleLPC` 仿冒属性 , 电源键功能由 `SSDT-PMCR.aml` 取代
+  - 移除关于屏蔽 AppleIntelLpssI2C 的属性 , 不再需要
+  - 由于用回早期亮度调整快捷键补丁 `SSDT-BKEY.aml`  , 添加相关更名
+
+
 #### Air13IWL-OC-1.1.0
 
 - 更新OpenCore版本至0.5.0
@@ -95,4 +115,4 @@
 + 已更换`DW1820A`蓝牙ID为`0a5c`,`6412`的可以直接使用(仍需配合虚拟机大法).
 + 目前已知问题:插入USB设备时会有睡眠秒醒问题,添加`0d/6d`补丁可解决!
 + 整合`SSDT-OCOS.aml` , `SSDT-XCPM.aml` , `SSDT-PNLF.aml` , `SSDT-SBUS.aml` , `SSDT-EC.aml` , `SSDT-Q11Q12.aml` 合并为`SSDT-Air13IWL.aml`
-+ 整合`CPUFriendProvider.kext` , `FakePCIID_Intel_HDMI_Audio.kext` , `XHCI-unsupported.kext` , `USBPorts.kext` , `BrcmBluetoothInjector.kext` 合并为`Air13IWL.kext`
++ 整合`CPUFriendDataProvider.kext` , `FakePCIID_Intel_HDMI_Audio.kext` , `XHCI-unsupported.kext` , `USBPorts.kext` , `BrcmBluetoothInjector.kext` 合并为`Air13IWL.kext`
