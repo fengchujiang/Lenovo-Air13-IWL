@@ -1,17 +1,15 @@
-DefinitionBlock ("", "SSDT", 2, "ACDT", "BUS0", 0)
+DefinitionBlock("", "SSDT", 2, "ACDT", "SLPB", 0)
 {
-    External (_SB_.PCI0.SBUS, DeviceObj)
-    Scope (_SB.PCI0.SBUS)
+    Scope (_SB)
     {
-        Device (BUS0)
+        Device (SLPB)
         {
-            Name (_CID, "smbus")
-            Name (_ADR, Zero)
+            Name (_HID, EisaId ("PNP0C0E"))
             Method (_STA, 0, NotSerialized)
             {
                 If (_OSI ("Darwin"))
                 {
-                    Return (0x0F)
+                    Return (0x0B)
                 }
                 Else
                 {
